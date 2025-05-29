@@ -1,4 +1,4 @@
-from core.models import Restaurent, Rating
+from core.models import Restaurent, Rating, Sale
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db import connection
@@ -96,6 +96,71 @@ def run():
     
     # rating = Rating.objects.first()
     # print(rating.restaurent.name)
+    
+    #########################################################
+    ############### Quering reverse relations in Django #####
+    
+    
+    #restaurent = Restaurent.objects.first()
+    # print(restaurent.rating_set.all())
+    
+    #print(restaurent.ratings.all())  # using related_name as the reverse manager
+    
+    #########################################################
+    ######## Reverse relation on sales ######################
+    # restaurent = Restaurent.objects.get(id=3)
+    # Sale.objects.create(
+    #     restaurent=restaurent,
+    #     income=2.33,
+    #     datetime=timezone.now()
+    # )
+    
+    # Sale.objects.create(
+    #     restaurent=restaurent,
+    #     income=2.53,
+    #     datetime=timezone.now()
+    # )
+    
+    # Sale.objects.create(
+    #     restaurent=restaurent,
+    #     income=3.33,
+    #     datetime=timezone.now()
+    # )
+    
+    
+    # restaurent = Restaurent.objects.get(id=3)
+    # print(restaurent.sale_set.all())
+    
+    ################################################################
+    ########### Getting or Creating/ Updating data with Model ######
+    
+    restaurent = Restaurent.objects.first()
+    user = User.objects.first()
+    
+    # print(Rating.objects.get_or_create(
+    #     restaurent=restaurent,
+    #     user=user,
+    #     rating=3
+    # ))
+    
+    # rating, created = Rating.objects.update_or_create(
+    #     restaurent=restaurent,
+    #     user=user,
+    #     defaults={'rating': 3}
+    # )
+    
+    # print(rating,created)
+    
+    # if created :
+    #     # send email
+    
+    ########################################################
+    ######### Deleting an object ###########################
+    
+    # restaurent = Restaurent.objects.get(id=1)
+    # restaurent.delete()
+    
+    ########################################################
     
     
     pprint(connection.queries)
