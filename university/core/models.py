@@ -179,7 +179,7 @@ class Restaurent(models.Model):
     
 class Rating(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    restaurent = models.ForeignKey(Restaurent,on_delete=models.CASCADE,related_name='ratings') # related_name='ratings'
+    restaurent = models.ForeignKey(Restaurent,on_delete=models.CASCADE, related_name='ratings') # related_name='ratings'
     rating = models.PositiveBigIntegerField()
     
     class Meta:
@@ -194,3 +194,5 @@ class Sale(models.Model):
     income = models.DecimalField(max_digits=9, decimal_places=2)
     datetime = models.DateTimeField()
     
+    def __str__(self):
+        return self.restaurent.name

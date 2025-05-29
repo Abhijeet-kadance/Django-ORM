@@ -5,7 +5,7 @@ from django.db import connection
 from pprint import pprint
 
 def run():
-    
+    pass
     ######## Creating Object ####################
     
     # restaurent = Restaurent()
@@ -100,8 +100,7 @@ def run():
     #########################################################
     ############### Quering reverse relations in Django #####
     
-    
-    #restaurent = Restaurent.objects.first()
+    # restaurent = Restaurent.objects.first()
     # print(restaurent.rating_set.all())
     
     #print(restaurent.ratings.all())  # using related_name as the reverse manager
@@ -129,7 +128,7 @@ def run():
     
     
     # restaurent = Restaurent.objects.get(id=3)
-    # print(restaurent.sale_set.all())
+    # print(restaurent.sales.all())
     
     ################################################################
     ########### Getting or Creating/ Updating data with Model ######
@@ -169,8 +168,16 @@ def run():
     # restaurent.name = "The Italian Pizza Shop"
     # restaurent.save()
     
+    # Restaurent.objects.create(
+    #     name="The Maharaja Cafe",
+    #     date_opened=timezone.now(),
+    #     latitute =50.2,
+    #     longitute=30.3
+    # )
+
+
     # restaurent.name = "The Irani Chai Shop"
     # restaurent.save(update_fields=['name'])
     
     
-    pprint(connection.queries)
+    # pprint(connection.queries)
