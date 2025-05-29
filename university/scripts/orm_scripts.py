@@ -134,8 +134,8 @@ def run():
     ################################################################
     ########### Getting or Creating/ Updating data with Model ######
     
-    restaurent = Restaurent.objects.first()
-    user = User.objects.first()
+    # restaurent = Restaurent.objects.first()
+    # user = User.objects.first()
     
     # print(Rating.objects.get_or_create(
     #     restaurent=restaurent,
@@ -161,6 +161,16 @@ def run():
     # restaurent.delete()
     
     ########################################################
+    ########### Updating Queries ##########################
+    
+    # restaurent = Restaurent.objects.first()
+    # print(restaurent.name)
+    
+    # restaurent.name = "The Italian Pizza Shop"
+    # restaurent.save()
+    
+    # restaurent.name = "The Irani Chai Shop"
+    # restaurent.save(update_fields=['name'])
     
     
     pprint(connection.queries)
