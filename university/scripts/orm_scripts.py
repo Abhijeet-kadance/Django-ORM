@@ -179,5 +179,15 @@ def run():
     # restaurent.name = "The Irani Chai Shop"
     # restaurent.save(update_fields=['name'])
     
+    #######################################################
+    ############### Validators Examples ###################
+    
+    user = User.objects.get(id=3)
+    restaurent = Restaurent.objects.get(id=4)
+    
+    # Rating.objects.create(user=user,restaurent=restaurent,rating=9)
+    # rating = Rating.objects.create(user=user,restaurent=restaurent,rating=9)
+    # rating.full_clean()
+    # rating.save()
     
     # pprint(connection.queries)

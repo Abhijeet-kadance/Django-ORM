@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
-
+from django.core.exceptions import ValidationError
 # ---------------------------------------
 # Department
 # ---------------------------------------
@@ -152,6 +152,25 @@ class CourseSchedule(models.Model):
 # User
 # Rating
 
+def validate_restaurent_name_begins_with_a(value):
+    if not value.startswith('a'):
+        raise ValidationError('Restaurent Name ust begin with a')
+
+
+# def clean(self):
+#     # Always call super first
+#     super().clean()
+
+#     # Custom validation
+#     if self.restaurent_type == 'FF' and self.date_opened.year < 2000:
+#         raise ValidationError("Fast Food restaurants must be opened after the year 2000.")
+
+# def validate_restaurent_type(value):
+#     allowed_types = {'IN', 'CH', 'IT', 'GR', 'MX', 'FF', 'OT'}
+#     if value not in allowed_types:
+#         raise ValidationError(f"{value} is not a valid restaurant type.")
+
+        
 class Restaurent(models.Model):
     class TypeChoices(models.TextChoices):
         INDIAN = 'IN', 'Indian'
@@ -162,11 +181,11 @@ class Restaurent(models.Model):
         FASTFOOD = 'FF', 'Fast Food'
         OTHER = 'OT', 'Others'
         
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100,validators=[validate_restaurent_name_begins_with_a])
     website = models.URLField(default='')
     date_opened = models.DateField()
-    latitute = models.FloatField()
-    longitute = models.FloatField()
+    latitute = models.FloatField(validators=[MinValueValidator(-90),MaxValueValidator(90)])
+    longitute = models.FloatField(validators=[MinValueValidator(-180),MaxValueValidator(180)])
     restaurent_type = models.CharField(max_length=2,choices=TypeChoices.choices)
     
     def __str__(self):
@@ -180,7 +199,11 @@ class Restaurent(models.Model):
 class Rating(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     restaurent = models.ForeignKey(Restaurent,on_delete=models.CASCADE, related_name='ratings') # related_name='ratings'
-    rating = models.PositiveBigIntegerField()
+    rating = models.PositiveSmallIntegerField(
+        validators=[
+            MinValueValidator(1),MaxValueValidator(5)
+        ]
+    )
     
     class Meta:
         unique_together = ('user', 'restaurent')

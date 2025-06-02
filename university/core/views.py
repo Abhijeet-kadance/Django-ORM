@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Department, Professor, Student, Enrollment, Course, Classroom
-
+from .forms import RestaurentForm
 # Create your views here.
 def orm_test(request):
     #dep = Department.objects.create(name="Computer")
@@ -25,10 +25,10 @@ def orm_test(request):
     # new.save()
     # print(dep.head)
     
-    department = Department.objects.all()
-    print(department.values_list())
-    print(department.values())
-    departments = list(department.values())
+    # department = Department.objects.all()
+    # print(department.values_list())
+    # print(department.values())
+    # departments = list(department.values())
     
     # dep = Department.objects.get(name='IT')
       
@@ -38,4 +38,29 @@ def orm_test(request):
     #     print("This professor is a head of department")
     # else:
     #     print("Not a HOD")
-    return HttpResponse("ORM Testing Started")
+    
+
+    # if request.method == 'POST':
+    #     form = RatingForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     else:
+    #         print("Form errors:", form.errors)
+    #         return render(request, 'core/index.html', {'form': form})
+    
+    # if request.method == 'POST':
+    #     form = RatingForm(request.POST or None)
+    #     if form.is_valid():
+    #         print(form.cleaned_data)
+    #     else:
+    #         return render(request,'core/index.html',{'form':form})
+    
+    if request.method == 'POST':
+        form = RestaurentForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print("Form errors:", form.errors)
+            return render(request, 'core/index.html', {'form': form})
+    
+    return render(request, 'core/index.html', {'form': RestaurentForm()})
