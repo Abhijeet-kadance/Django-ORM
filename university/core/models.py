@@ -2,11 +2,12 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+ 
 # ---------------------------------------
 # Department
 # ---------------------------------------
 class Department(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True)  # Name Only heere
     head = models.OneToOneField(
         'Professor',
         null=True,
@@ -221,3 +222,5 @@ class Sale(models.Model):
     
     
 #####
+    
+

@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Department, Professor, Student, Enrollment, Course, Classroom
-from .forms import RestaurentForm
+from .forms import RatingForm
+
 # Create your views here.
 def orm_test(request):
     #dep = Department.objects.create(name="Computer")
@@ -40,13 +41,13 @@ def orm_test(request):
     #     print("Not a HOD")
     
 
-    # if request.method == 'POST':
-    #     form = RatingForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #     else:
-    #         print("Form errors:", form.errors)
-    #         return render(request, 'core/index.html', {'form': form})
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print("Form errors:", form.errors)
+            return render(request, 'core/index.html', {'form': form})
     
     # if request.method == 'POST':
     #     form = RatingForm(request.POST or None)
@@ -55,15 +56,15 @@ def orm_test(request):
     #     else:
     #         return render(request,'core/index.html',{'form':form})
     
-    if request.method == 'POST':
-        form = RestaurentForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            print("Form errors:", form.errors)
-            return render(request, 'core/index.html', {'form': form})
+    # if request.method == 'POST':
+    #     form = RestaurentForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     else:
+    #         print("Form errors:", form.errors)
+    #         return render(request, 'core/index.html', {'form': form})
     
-    return render(request, 'core/index.html', {'form': RestaurentForm()})
+    # return render(request, 'core/index.html', {'form': RestaurentForm()})
     
 # from django.contrib.auth.models import User
 # from django.utils import timezone
@@ -124,3 +125,4 @@ def orm_test(request):
 #             )
 
 #     return Response({"message": "Sample data created successfully!"})
+    return render(request, 'core/index.html', {'form': RatingForm()})
