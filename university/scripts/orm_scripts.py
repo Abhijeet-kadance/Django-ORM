@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.db import connection
 from pprint import pprint
 
+
 def run():
     pass
     ######## Creating Object ####################
@@ -182,10 +183,11 @@ def run():
     #######################################################
     ############### Validators Examples ###################
     
-    user = User.objects.get(id=3)
-    restaurent = Restaurent.objects.get(id=4)
+    user = User.objects.get( id = 2 )
+    restaurent = Restaurent.objects.get(id=5)      
     
-    # Rating.objects.create(user=user,restaurent=restaurent,rating=9)
+    
+    Rating.objects.create(user=user,restaurent=restaurent,rating=9)
     # rating = Rating.objects.create(user=user,restaurent=restaurent,rating=9)
     # rating.full_clean()
     # rating.save()
