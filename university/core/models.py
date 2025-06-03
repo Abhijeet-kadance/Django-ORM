@@ -152,9 +152,9 @@ class CourseSchedule(models.Model):
 # User
 # Rating
 
-def validate_restaurent_name_begins_with_a(value):
-    if not value.startswith('a'):
-        raise ValidationError('Restaurent Name ust begin with a')
+# def validate_restaurent_name_begins_with_a(value):
+#     if not value.startswith('a'):
+#         raise ValidationError('Restaurent Name ust begin with a')
 
 
 # def clean(self):
@@ -181,7 +181,7 @@ class Restaurent(models.Model):
         FASTFOOD = 'FF', 'Fast Food'
         OTHER = 'OT', 'Others'
         
-    name = models.CharField(max_length=100,validators=[validate_restaurent_name_begins_with_a])
+    name = models.CharField(max_length=100)
     website = models.URLField(default='')
     date_opened = models.DateField()
     latitute = models.FloatField(validators=[MinValueValidator(-90),MaxValueValidator(90)])
@@ -214,8 +214,10 @@ class Rating(models.Model):
     
 class Sale(models.Model):
     restaurent = models.ForeignKey(Restaurent, on_delete=models.SET_NULL, null=True,related_name='sales')
-    income = models.DecimalField(max_digits=9, decimal_places=2)
     datetime = models.DateTimeField()
     
     def __str__(self):
         return self.restaurent.name
+    
+    
+#####

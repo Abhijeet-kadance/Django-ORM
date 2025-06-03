@@ -182,12 +182,50 @@ def run():
     #######################################################
     ############### Validators Examples ###################
     
-    user = User.objects.get(id=3)
-    restaurent = Restaurent.objects.get(id=4)
+    # user = User.objects.get(id=3)
+    # restaurent = Restaurent.objects.get(id=3)
     
-    # Rating.objects.create(user=user,restaurent=restaurent,rating=9)
+    # # Rating.objects.create(user=user,restaurent=restaurent,rating=9)
     # rating = Rating.objects.create(user=user,restaurent=restaurent,rating=9)
     # rating.full_clean()
     # rating.save()
     
-    # pprint(connection.queries)
+    ###############################################################
+    ########## Updating Queryset of records #######################
+    
+    # restaurents = Restaurent.objects.all()
+    # restaurents.update(
+    #     date_opened=timezone.now()
+    # )
+    
+    ###############################################################
+    ########## Field Lookups ######################################
+    # exact
+    # iexact
+    # contains
+    # icontains
+    # startswith
+    
+    # restaurents = Restaurent.objects.filter(name__startswith='T')
+    # print(restaurents)
+    
+    # restaurents.update(
+    #     date_opened=timezone.now() - timezone.timedelta(days=365)
+    # )
+    
+    # restaurent = Restaurent.objects.get(id=5)
+    # print(restaurent.pk)
+    
+    # # print(restaurent.ratings.all())
+    # restaurent.delete()
+    
+    # Restaurent.objects.all().delete()
+    ################# OPTIONS ON DELETION ###########################
+    
+    ## CASCADE
+    ## PROTECT
+    ## RESTRICT
+    ## SET_NULL
+    ## SET_DEFAULT
+    
+    pprint(connection.queries)

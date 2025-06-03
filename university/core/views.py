@@ -64,3 +64,63 @@ def orm_test(request):
             return render(request, 'core/index.html', {'form': form})
     
     return render(request, 'core/index.html', {'form': RestaurentForm()})
+    
+# from django.contrib.auth.models import User
+# from django.utils import timezone
+# from rest_framework.decorators import api_view
+# from rest_framework.response import Response
+# from decimal import Decimal
+# from random import randint, choice, uniform
+# from datetime import datetime, timedelta, date
+
+# from .models import Restaurent, Rating, Sale
+
+# @api_view(['POST'])
+# def populate_sample_data(request):
+#     # Sample Users
+#     users = []
+#     for i in range(5):
+#         user, _ = User.objects.get_or_create(
+#             username=f'user{i}',
+#             defaults={'email': f'user{i}@example.com', 'password': 'testpass123'}
+#         )
+#         users.append(user)
+
+#     # Sample Restaurants
+#     types = ['IN', 'CH', 'IT', 'GR', 'MX', 'FF', 'OT']
+#     names = ['Annapurna', 'Dragon Wok', 'La Pasta', 'Greek Gyro', 'Taco Fiesta', 'Burger Hub', 'Global Eats']
+#     restaurants = []
+
+#     for i, name in enumerate(names):
+#         rest, _ = Restaurent.objects.get_or_create(
+#             name=name,
+#             defaults={
+#                 'website': f'https://www.{name.lower().replace(" ", "")}.com',
+#                 'date_opened': date(2010+i, 5, 15),
+#                 'latitute': round(uniform(-90, 90), 6),
+#                 'longitute': round(uniform(-180, 180), 6),
+#                 'restaurent_type': types[i % len(types)],
+#             }
+#         )
+#         restaurants.append(rest)
+
+#     # Sample Ratings
+#     for user in users:
+#         for rest in restaurants:
+#             if randint(0, 1):  # 50% chance of rating
+#                 Rating.objects.get_or_create(
+#                     user=user,
+#                     restaurent=rest,
+#                     defaults={'rating': randint(1, 5)}
+#                 )
+
+#     # Sample Sales
+#     for rest in restaurants:
+#         for _ in range(5):  # 5 sales per restaurant
+#             Sale.objects.create(
+#                 restaurent=rest,
+#                 income=Decimal(randint(1000, 10000)) + Decimal(f".{randint(0,99):02d}"),
+#                 datetime=timezone.now() - timedelta(days=randint(0, 365))
+#             )
+
+#     return Response({"message": "Sample data created successfully!"})
