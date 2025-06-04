@@ -301,8 +301,8 @@ def run():
     
     # chinese = Restaurent.TypeChoices.CHINESE
     # indian = Restaurent.TypeChoices.INDIAN
-    # restaurents = Restaurent.objects.exclude(restaurent_type=chinese)
-    # print(restaurents)
+    # # restaurents = Restaurent.objects.exclude(restaurent_type=chinese)
+    # # print(restaurents)
     
     # filter_types = [chinese,indian]
     
@@ -320,6 +320,7 @@ def run():
     # print(restaurents)  
     
     # sale = Sale.objects.filter(income__gt=1000)
+    # print(sale)
     # for sa in sale:
     #     print(sa.restaurent.name)
         
@@ -346,21 +347,20 @@ def run():
     # WHERE sale.income > 1000;
 
     # sales_all = Sale.objects.filter(income__range=(1000,2000))
-    # print(sales_all)
+
     
     # sales_all = Sale.objects.filter(income__range=(1000, 2000)).select_related('restaurent')
-
+    # print(sales_all)
     # for sale in sales_all:
     #     print(sale.restaurent)
     
     ############## ORDER BY 
     
-    # restaurents = Restaurent.objects.order_by('name')  # order Alphabetically
-    
-    
+    # restaurents = Restaurent.objects.order_by('-name')  # order Alphabetically
     # print(restaurents)
     
-    #  sales = Sale.objects.all().order_by('-income').select_related('restaurent') # Ascending Order
+   
+    # sales = Sale.objects.all().order_by('income').select_related('restaurent') # Ascending Order
     # sales = Sale.objects.all().order_by('-income').select_related('restaurent') # Descending Order
     
     # for data in sales:
