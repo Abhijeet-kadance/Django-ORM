@@ -187,11 +187,11 @@ def run():
     # restaurent = Restaurent.objects.get(id=3)
     
     # # Rating.objects.create(user=user,restaurent=restaurent,rating=9)
-    user = User.objects.get( id = 2 )
-    restaurent = Restaurent.objects.get(id=5)      
+    # user = User.objects.get( id = 2 )
+    # restaurent = Restaurent.objects.get(id=7)      
     
     
-    Rating.objects.create(user=user,restaurent=restaurent,rating=9)
+    # Rating.objects.create(user=user,restaurent=restaurent,rating=9)
     # rating = Rating.objects.create(user=user,restaurent=restaurent,rating=9)
     # rating.full_clean()
     # rating.save()
@@ -224,7 +224,7 @@ def run():
     
     # # print(restaurent.ratings.all())
     # restaurent.delete()
-    s
+    
     # Restaurent.objects.all().delete()
     ################# OPTIONS ON DELETION ###########################
     
@@ -234,4 +234,136 @@ def run():
     ## SET_NULL
     ## SET_DEFAULT
     
+    #################################################################
+    ############### Queryset Filtering and lookups/Ordering##########
+    
+    # print(Restaurent.objects.count())
+    
+    # print(Rating.objects.count())
+    
+    # print(Sale.objects.count())
+    
+    
+    # restaurents = Restaurent.objects.filter(restaurent_type=Restaurent.TypeChoices.ITALIAN)
+    # print(restaurents)
+    
+    # print(Restaurent.objects.filter(name="Dragon Wok"))
+    
+    # restaurent = Restaurent.objects.filter(name="Dragon Wok")
+    # print(restaurent.count())
+    
+    ## Converting Queryset to single objects with get()
+    ## get only return single instance of a queryset of object
+    # print(restaurent.get())
+
+
+    ### Failuer of filtering multiple objects with get
+    
+    # restaurent = Restaurent.objects.get(restaurent_type=Restaurent.TypeChoices.ITALIAN)
+    # print(restaurent)
+    
+    ## get as it dont return multiple objects of a queryset it give error of MultipleObjectReturned Error
+    
+    # restaurent = Restaurent.objects.filter(restaurent_type=Restaurent.TypeChoices.ITALIAN)
+    # print(restaurent.exists())
+    
+    # restaurent = Restaurent.objects.filter(name="jahsgasjdh")
+    # print(restaurent.exists())
+    
+    ##################################################################
+    ############Multiple Filters######################################
+    
+    
+    # italian = Restaurent.TypeChoices.ITALIAN
+    # restaurent = Restaurent.objects.filter(restaurent_type=italian)
+    # print(restaurent)
+    
+    
+    # italian = Restaurent.TypeChoices.ITALIAN
+    # restaurent = Restaurent.objects.filter(restaurent_type=italian,name__startswith='T')
+    # print(restaurent)
+    
+    
+    
+    ############# IN (in) lookup in Filter ##############
+    
+    # chinese = Restaurent.TypeChoices.CHINESE
+    # indian = Restaurent.TypeChoices.INDIAN
+    # italian = Restaurent.TypeChoices.ITALIAN
+    
+    # filter_types = [chinese,italian]
+    
+    # restaurents = Restaurent.objects.filter(restaurent_type__in=filter_types)
+    # print(restaurents)
+    
+    ################## exclude mehtod ###################
+    ## In refrence to SQL it puts an NOT operator in front of your where clause
+    
+    # chinese = Restaurent.TypeChoices.CHINESE
+    # indian = Restaurent.TypeChoices.INDIAN
+    # restaurents = Restaurent.objects.exclude(restaurent_type=chinese)
+    # print(restaurents)
+    
+    # filter_types = [chinese,indian]
+    
+    # restaurents = Restaurent.objects.exclude(restaurent_type__in=filter_types)
+    # print(restaurents)
+    
+    ################# Additional lookups ###############
+    # restaurents = Restaurent.objects.filter(name__lt='E')
+    # print(restaurents)    
+    
+    # restaurents = Restaurent.objects.filter(longitute__gt=0)
+    # print(restaurents)  
+    
+    # restaurents = Restaurent.objects.exclude(longitute__gt=0)
+    # print(restaurents)  
+    
+    # sale = Sale.objects.filter(income__gt=1000)
+    # for sa in sale:
+    #     print(sa.restaurent.name)
+        
+    # sale = Sale.objects.filter(income__gt=1000).select_related('restaurent')
+    # for sa in sale:
+    #     print(sa.restaurent.name) 
+        
+        
+    #     SELECT 
+    #     sale.id,
+    #     sale.income,
+    #     sale.datetime,
+    #     sale.restaurent_id,
+    #     restaurent.id,
+    #     restaurent.name,
+    #     restaurent.website,
+    #     restaurent.date_opened,
+    #     restaurent.latitute,
+    #     restaurent.longitute,
+    #     restaurent.restaurent_type
+    # FROM app_sale AS sale
+    # INNER JOIN app_restaurent AS restaurent
+    # ON sale.restaurent_id = restaurent.id
+    # WHERE sale.income > 1000;
+
+    # sales_all = Sale.objects.filter(income__range=(1000,2000))
+    # print(sales_all)
+    
+    # sales_all = Sale.objects.filter(income__range=(1000, 2000)).select_related('restaurent')
+
+    # for sale in sales_all:
+    #     print(sale.restaurent)
+    
+    ############## ORDER BY 
+    
+    # restaurents = Restaurent.objects.order_by('name')  # order Alphabetically
+    
+    
+    # print(restaurents)
+    
+    #  sales = Sale.objects.all().order_by('-income').select_related('restaurent') # Ascending Order
+    # sales = Sale.objects.all().order_by('-income').select_related('restaurent') # Descending Order
+    
+    # for data in sales:
+    #     print(data.restaurent)
+        
     pprint(connection.queries)
