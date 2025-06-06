@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.db.models.functions import Lower
  
 # ---------------------------------------
 # Department
@@ -189,6 +190,9 @@ class Restaurent(models.Model):
     longitute = models.FloatField(validators=[MinValueValidator(-180),MaxValueValidator(180)])
     restaurent_type = models.CharField(max_length=2,choices=TypeChoices.choices)
     
+    class Meta:
+        ordering = [Lower('name')]
+        
     def __str__(self):
         return self.name
     

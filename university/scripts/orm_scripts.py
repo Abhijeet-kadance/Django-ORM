@@ -365,5 +365,53 @@ def run():
     
     # for data in sales:
     #     print(data.restaurent)
+    
+    #############################################################################
+    ################### prefetch_related ########################################
+    
+    # restaurent = Restaurent.objects.first()
+    # print(restaurent.rating_set.all())
+    
+    # print(restaurent.ratings.all())  
+    
+    #restaurents = Restaurent.objects.prefetch_related('ratings')
+    #print(restaurents)
+    
+    #############################################################################
+    ###################### Limiting #############################################
+    
+    
+    # restaurent = Restaurent.objects.order_by('date_opened')[:2]
+    # print(restaurent)
+    
+    ###### Default way of ordering can be done in modes.py file Model class by adding below code
+    
+    # class Meta:
+    #     ordering = [Lower('name')]
+    
+    # restaurents = Restaurent.objects.all()
+    # print(restaurents)
+    
+    ################################################################################
+    ##################### Earliest and Latest ######################################
+    
+    # restaurent = Restaurent.objects.earliest('date_opened')
+    # print(restaurent.date_opened)
+    
+    # restaurent = Restaurent.objects.latest('date_opened')
+    # print(restaurent.date_opened)
+    ################################################################################
+    ######################
+    
+    # for r in Restaurent.objects.all():
+    #     print(r.name, [rating.rating for rating in r.ratings.all()])
+    
+    
+    restaurents = Restaurent.objects.prefetch_related('ratings')
+    
+    # print(restaurents[0].ratings.all())
+    
+    for r in restaurents:
+        print(r.name, [rating.rating for rating in r.ratings.all()])
         
     pprint(connection.queries)
