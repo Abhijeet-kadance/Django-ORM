@@ -1,0 +1,24 @@
+<!-- core/templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Django ORM{% endblock %}</title>
+
+</head>
+<body>
+    <header>
+        <h1>Django ORM Practice</h1>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Django ORM</p>
+    </footer>
+</body>
+</html>

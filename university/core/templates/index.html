@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Home - My Site{% endblock %}
+
+{% block content %}
+
+{% comment %} {{ restaurents }} {% endcomment %}
+
+{% comment %} N + 1 Proplem Example {% endcomment %}
+
+{% comment %} {% for restaurent in restaurents %}
+    <p> {{ restaurent.name }} </p>
+    <ul>
+        {% for rating in restaurent.ratings.all %}
+            <li> {{ rating.rating }} </li>
+        {% endfor %}
+        {% for sale in restaurent.sales.all %}
+            <li> {{ sale.income }} </li>
+        {% endfor %}
+    </ul>
+{% endfor %} {% endcomment %}
+
+{% for rating in ratings %}
+    <p> {{ rating.restaurent.name }} - {{ rating.rating }} </p>
+{% endfor %}
+
+{% endblock %}

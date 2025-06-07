@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Department, Professor, Student, Enrollment, Course, Classroom
+from .models import Restaurent,Rating,Sale
 from .forms import RatingForm
 
 # Create your views here.
-def orm_test(request):
+# def orm_test(request):
     #dep = Department.objects.create(name="Computer")
     # = Professor.oprofbjects.create(name="Arav Mehta",department=dep, hire_date="2020-01-01")
     #dep.head = prof
@@ -41,13 +41,13 @@ def orm_test(request):
     #     print("Not a HOD")
     
 
-    if request.method == 'POST':
-        form = RatingForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            print("Form errors:", form.errors)
-            return render(request, 'core/index.html', {'form': form})
+    # if request.method == 'POST':
+    #     form = RatingForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     else:
+    #         print("Form errors:", form.errors)
+    #         return render(request, 'core/index.html', {'form': form})
     
     # if request.method == 'POST':
     #     form = RatingForm(request.POST or None)
@@ -125,4 +125,25 @@ def orm_test(request):
 #             )
 
 #     return Response({"message": "Sample data created successfully!"})
-    return render(request, 'core/index.html', {'form': RatingForm()})
+    # return render(request, 'core/index.html', {'form': RatingForm()})
+
+
+def orm_test(request):
+    
+    ########### prefetch related #######################################################################
+    # restaurents = Restaurent.objects.all()
+    # restaurents = Restaurent.objects.prefetch_related('ratings','sales')
+    # restaurents = Restaurent.objects.filter(name__istartswith='T').prefetch_related('ratings','sales')
+    
+    ########### select related #######################################################################
+    # ratings = Rating.objects.all()
+    
+    # ratings = Rating.objects.select_related('restaurent')
+    
+    ### Optional method for optiisation 
+    ### only method and defer
+    
+    # ratings = Rating.objects.only('rating','restaurent__name').select_related('restaurent')
+    
+    context = {'ratings':ratings}
+    return render(request, 'index.html',context)

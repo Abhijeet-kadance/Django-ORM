@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db import connection
 from pprint import pprint
+from django.db.models import Count, F, Value
 
 
 def run():
@@ -400,18 +401,77 @@ def run():
     
     # restaurent = Restaurent.objects.latest('date_opened')
     # print(restaurent.date_opened)
+    
     ################################################################################
-    ######################
+    ###################### F() Expressions #########################################
+    
+    ## USE CASE 1: Update a Field Based on Its Current Value
+    ##
     
     # for r in Restaurent.objects.all():
     #     print(r.name, [rating.rating for rating in r.ratings.all()])
     
     
-    restaurents = Restaurent.objects.prefetch_related('ratings')
+    # restaurents = Restaurent.objects.prefetch_related('ratings')
     
-    # print(restaurents[0].ratings.all())
+    # # print(restaurents[0].ratings.all())
     
-    for r in restaurents:
-        print(r.name, [rating.rating for rating in r.ratings.all()])
-        
+    # for r in restaurents:
+    #     print(r.name, [rating.rating for rating in r.ratings.all()])
+    # sale = Sale.objects.filter(id=1).update(income=F('income') * 1.10)
+    
+    #################################################################################
+    
+    ######## Updating sale price on DB level only
+    # Sale.objects.filter(id=sale.id).update(income=F('income') * 1.10)
+    # updated_sale = Sale.objects.get(id=1)
+    # print(updated_sale.income)
+    
+    
+    ######### Updating sale price on python side not DB
+    # sale = Sale.objects.get(id=1)
+    # sale.income *= 1.10
+    # sale.save()
+    
+    #########################################################################################
+    # 🆚 .update() vs .save() Summary                                                      # 
+    #                                                                                       #
+    # Method	 Applies to	        Calls save() logic?	    Validations?	  Efficient?    #
+    #                                                                                       #
+    # update()	 QuerySet only	    ❌ No	                  ❌ No	          ✅ Yes     #
+    # save()	 Single instance	✅ Yes	                  ✅ Yes	          ❌ No      #
+    #                                                                                       #
+    #########################################################################################
+    
+    '''
+        .update() works only with filter() because it's designed for 
+         direct SQL-level updates on querysets — not for individual objects.
+    '''
+    #########################################################################################
+    ## USE CASE 2: Filter Where One Field Is Greater Than Another
+    ##
+     
+    # restaurents = Restaurent.objects.filter(latitute__gt=F('longitute'))
+    
+    ## Without F()
+    # restaurents = Restaurent.objects.all()
+    # filtered = [r for r in restaurents if r.latitute > r.longitute]
+    # print(filtered)
+    
+    # restaurents = list(Restaurent.objects.all())  # Make sure values are loaded
+    # for r in restaurents:
+    #     print(r.name, r.latitute, r.longitute)
+    # filtered = [r for r in restaurents if r.latitute > r.longitute]
+    
+    
+    # print(restaurents)
+    ## USE CASE 3: Bulk Update
+    # Sale.objects.update(income=F('income') * 1.1)
+    # # Without F() expression
+    # for sale in Sale.objects.all():
+    #     sale.income *= 1.1
+    #     sale.save()
+    ###################################################################################
+    ############### N + 1 problem and solutions #######################################
+    
     pprint(connection.queries)
